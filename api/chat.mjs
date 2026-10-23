@@ -42,7 +42,7 @@ export default {
   async fetch(request) {
     if (request.method !== 'POST') return json({ error: 'Use POST to send a chat message.' }, 405);
 
-    const apiKey = process.env.OPENAI_API_KEY;
+    const apiKey = process.env.GROQ_API_KEY;
     if (!apiKey) return json({ error: 'The assistant is not configured yet. Please try again later.' }, 503);
 
     let body;
@@ -65,30 +65,24 @@ export default {
     }
 
     try {
-      const upstream = await fetch('https://api.openai.com/v1/responses', {
+      const upstream = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
         headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          model: 'gpt-4.1-mini',
-          instructions: portfolioFacts,
-          input: history,
-          max_output_tokens: 220,
-          store: false,
+          model: 'openai/gpt-oss-20b',
+          messages: [{ role: 'system', content: portfolioFacts }, ...history],
+          max_completion_tokens: 220,
         }),
       });
 
       if (!upstream.ok) {
-        console.error('Portfolio assistant provider returned status', upstream.status);
+        const errorBody = await upstream.json().catch(() => ({}));
+        console.error('Portfolio assistant provider returned status', upstream.status, errorBody.error?.code || '', errorBody.error?.message || '');
         return json({ error: 'The assistant could not answer right now. Please try again shortly.' }, 502);
       }
 
       const result = await upstream.json();
-      const reply = result.output
-        ?.flatMap((item) => item.content || [])
-        .filter((part) => part.type === 'output_text')
-        .map((part) => part.text)
-        .join('\n')
-        .trim();
+      const reply = result.choices?.[0]?.message?.content?.trim();
 
       if (!reply) return json({ error: 'The assistant returned an empty reply. Please try again.' }, 502);
       return json({ reply });
