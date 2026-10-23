@@ -76,15 +76,21 @@
     </main>
     <footer class="site-footer"><div class="section-shell footer-inner"><a class="brand" href="#home"><span class="brand-mark">A<span>.</span></span><span class="brand-name">Ashwin Raj P</span></a><span>Designed with curiosity · © <span id="year">2026</span></span><a href="#home" class="back-top">BACK TO TOP ↑</a></div></footer>
     <div class="chat-widget" id="portfolio-chat">
-      <section class="chat-panel" id="chat-panel" aria-label="Ask Ashwin's portfolio" hidden>
-        <div class="chat-header"><div><span class="chat-status-dot"></span><div><strong>Portfolio assistant</strong><small>Ask about Ashwin’s work</small></div></div><button class="chat-close" type="button" aria-label="Close chat">×</button></div>
-        <div class="chat-messages" id="chat-messages" aria-live="polite" aria-relevant="additions text"><div class="chat-message assistant-message">Hi! I can answer questions about Ashwin’s projects, skills, and experience.</div></div>
-        <div class="chat-suggestions" id="chat-suggestions"><button type="button">What projects has he built?</button><button type="button">What skills is he learning?</button></div>
-        <form class="chat-form" id="chat-form"><label class="visually-hidden" for="chat-input">Your message</label><input id="chat-input" name="message" type="text" maxlength="1000" placeholder="Ask a question…" autocomplete="off" required /><button type="submit" aria-label="Send message">↑</button></form>
-        <p class="chat-note">AI answers use information on this portfolio and may be incomplete.</p>
-      </section>
-      <button class="chat-launcher" type="button" aria-label="Open portfolio chat" aria-expanded="false" aria-controls="chat-panel"><span class="chat-launch-icon" aria-hidden="true">✳</span><span>Ask about my work</span></button>
+      <aside class="chat-panel" id="chat-panel" role="dialog" aria-labelledby="chat-title" aria-label="Portfolio assistant" hidden>
+        <header class="chat-header">
+          <div class="chat-avatar" aria-hidden="true">A<span>.</span></div>
+          <div class="chat-heading"><strong id="chat-title">Ashwin’s portfolio AI</strong><span><i class="chat-status-dot"></i> Here to help you explore</span></div>
+          <button class="chat-reset" type="button" aria-label="Start a new conversation" title="New conversation">↻</button>
+          <button class="chat-close" type="button" aria-label="Close chat">×</button>
+        </header>
+        <div class="chat-context"><span class="chat-kicker">PORTFOLIO ASSISTANT</span><h2>Curious about Ashwin’s work?</h2><p>Ask me about projects, skills, education, or experience.</p></div>
+        <div class="chat-messages" id="chat-messages" aria-live="polite" aria-relevant="additions text"><div class="chat-message assistant-message welcome-message">Hi! I can help you explore the portfolio. What would you like to know?</div></div>
+        <div class="chat-suggestions" id="chat-suggestions" role="group" aria-label="Suggested questions"><button type="button">Projects <span>↗</span></button><button type="button">Skills <span>↗</span></button><button type="button">Experience <span>↗</span></button></div>
+        <form class="chat-form" id="chat-form"><label class="visually-hidden" for="chat-input">Your message</label><input id="chat-input" name="message" type="text" maxlength="1000" placeholder="Ask anything about my portfolio…" autocomplete="off" required /><button type="submit" aria-label="Send message"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12 20 4l-5 16-3-6-8-2Zm8 2 8-10" /></svg></button></form>
+        <p class="chat-note"><span>✳</span> AI assistant · Answers based on this portfolio</p>
+      </aside>
+      <button class="chat-launcher" type="button" aria-label="Open portfolio chat" aria-expanded="false" aria-controls="chat-panel"><span class="chat-launch-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3h11A2.5 2.5 0 0 1 20 5.5v8a2.5 2.5 0 0 1-2.5 2.5h-6l-5 4v-4.5A2.5 2.5 0 0 1 4 13V5.5Z"/><path d="M8 8h8M8 11h5"/></svg></span><span class="chat-launcher-copy"><strong>Have a question?</strong><small>Ask my portfolio assistant</small></span><span class="chat-launcher-arrow" aria-hidden="true">↗</span></button>
     </div>
-    <script src="script.js"></script>
+<script src="script.js"></script>
   </body>
 </html>
