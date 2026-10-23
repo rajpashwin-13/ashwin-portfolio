@@ -44,6 +44,36 @@ function addChatMessage(text, role) {
   return message;
 }
 
+function formatAssistantReply(text) {
+  const sourceLines = text.replace(/\r\n?/g, '\n').split('\n');
+  const formattedLines = [];
+  const isListLine = (line) => line.startsWith('• ') || /^\d+[.)]\s/.test(line);
+
+  for (const sourceLine of sourceLines) {
+    let line = sourceLine.trim()
+      .replace(/^#{1,6}\s+/, '')
+      .replace(/^\s*[-*•]\s+/, '• ')
+      .replace(/\*\*(.*?)\*\*/g, '$1')
+      .replace(/__(.*?)__/g, '$1')
+      .replace(/(?<!\*)\*([^*\n]+)\*(?!\*)/g, '$1')
+      .replace(/`([^`]+)`/g, '$1')
+      .replace(/\*\*/g, '')
+      .trim();
+
+    if (!line) {
+      if (formattedLines.length && formattedLines.at(-1) !== '') formattedLines.push('');
+      continue;
+    }
+
+    const previous = formattedLines.at(-1);
+    if (isListLine(line) && previous && previous !== '' && !isListLine(previous)) formattedLines.push('');
+    if (!isListLine(line) && previous && isListLine(previous)) formattedLines.push('');
+    formattedLines.push(line);
+  }
+
+  return formattedLines.join('\n').replace(/\n{3,}/g, '\n\n').trim();
+}
+
 function addTypingIndicator() {
   const bubble = addChatMessage('', 'assistant');
   bubble.classList.add('typing-bubble');
@@ -77,9 +107,11 @@ async function sendPortfolioMessage(message, { retry = false } = {}) {
     if (!response.ok) throw new Error(data.error || 'The assistant could not answer just now. Please try again.');
     if (typeof data.reply !== 'string' || !data.reply.trim()) throw new Error('I didn’t get a reply that time. Please try again.');
 
+    const formattedReply = formatAssistantReply(data.reply);
+    if (!formattedReply) throw new Error('I didn’t get a complete reply that time. Please try again.');
     pending.remove();
-    addChatMessage(data.reply.trim(), 'assistant');
-    chatHistory.push({ role: 'user', content: message }, { role: 'assistant', content: data.reply.trim() });
+    addChatMessage(formattedReply, 'assistant');
+    chatHistory.push({ role: 'user', content: message }, { role: 'assistant', content: formattedReply });
   } catch (error) {
     pending.remove();
     const isTimeout = error.name === 'AbortError';

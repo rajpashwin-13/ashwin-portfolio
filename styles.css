@@ -32,7 +32,7 @@
 @keyframes chat-enter{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
 .chat-header{position:relative;overflow:hidden;flex:0 0 auto;gap:11px;justify-content:flex-start;padding:19px 17px;background:linear-gradient(118deg,#20392b,#315c48 72%,#42715a);border:0;color:#fff}
 .chat-header::after{content:"✳";position:absolute;right:76px;top:-35px;color:rgba(235,245,224,.1);font:130px/1 var(--serif);pointer-events:none}
-.chat-avatar{position:relative;z-index:1;width:43px;height:43px;flex:0 0 43px;display:grid;place-items:center;border-radius:14px;background:#e4ecda;color:#315b48;font:800 19px var(--display);letter-spacing:-2px;box-shadow:0 3px 12px rgba(10,27,16,.2)}
+.chat-avatar{position:relative;z-index:1;width:43px;height:43px;flex:0 0 43px;display:grid;place-items:center;border-radius:14px;background:#e4ecda;color:#315b48;font:800 15px var(--display);letter-spacing:-.07em;box-shadow:0 3px 12px rgba(10,27,16,.2)}
 .chat-avatar span{color:#77936d}
 .chat-heading{position:relative;z-index:1;display:flex;flex-direction:column;gap:5px;min-width:0;flex:1}
 .chat-heading strong{font:700 12px var(--display);color:#fff;letter-spacing:-.01em}.chat-heading>span{font:10px var(--sans);color:#d3e0d3;display:flex;align-items:center;gap:7px}
